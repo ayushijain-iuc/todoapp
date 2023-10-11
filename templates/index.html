@@ -1,0 +1,47 @@
+
+{% extends "home.html" %}
+{% block title %}
+<title>Register</title>
+{% endblock title %}
+{% block body %}
+	<h1>Todo List</h1> 
+	<div>Add a new todo item: 
+		<form action="{{ url_for('add') }}" method="POST"> 
+		
+			<input type="text" name="todoitem"> 
+			<input type="submit" value="Add Item" class="button"> 
+		</form> 
+	</div> 
+	<div> 
+		<h2>Incomplete Items</h2> 
+		<ul> 
+			{% for todo in incomplete %} 
+			<li style="font-size: 30pt" class='mark'>{{ todo.text }} <a href="{{ url_for('complete', id=todo.id) }}">Mark As Complete</a></li> 
+			<a href="/delete/{{todo.id}}" class="btn btn-danger">Delete</a>
+			{% endfor %}	 
+		</ul> 
+		<h2>Completed Items</h2> 
+		<ul> 
+			{% for todo in complete %} 
+			<li style="font-size: 30pt">{{ todo.text }}  </li> 
+			<a href="{{ url_for('delete', id=todo.id) }}" class="btn btn-danger">Delete</a>
+			<a href="{{ url_for('edit', id=todo.id) }}" class="btn btn-primary">Update</a>
+			{% endfor %}     
+      
+            
+
+		</ul> 
+	</div> 
+	{% with messages = get_flashed_messages() %}
+	{% if messages %}
+	<div class="alert alert-info">
+		<ul>
+			{% for message in messages %}
+			<li>{{ message }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endif %}
+	{% endwith %}
+    
+    {% endblock body %}
